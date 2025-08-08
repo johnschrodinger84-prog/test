@@ -1,0 +1,721 @@
+/* Modern CSS Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #2c5364, #203a43, #0f2027);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #e1e8f0;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  width: 95%;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+}
+
+/* Typography */
+h1 {
+  font-size: 2.5em;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #4299e1, #667eea);
+  border-radius: 2px;
+}
+
+/* Form Styling */
+#form-container {
+  margin: 2rem 0;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduce the gap between form elements */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Reduced from 1.2rem */
+}
+
+/* Reduce gap between label and input/select */
+label {
+  font-weight: 500;
+  color: #e1e8f0;
+  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+select, 
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  backdrop-filter: blur(5px);
+}
+
+select:focus, 
+input[type="text"]:focus {
+  border-color: #4299e1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Button Styles */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#generateButton {
+  background: linear-gradient(135deg, #4299e1, #667eea);
+  color: white;
+  width: 100%;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#generateButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4);
+}
+
+#resetButton {
+  background: linear-gradient(135deg, #fc8181, #f56565);
+  color: white;
+  width: 100%;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#resetButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 101, 101, 0.4);
+}
+
+/* Case Display */
+.case-container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.case-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.case-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: #e1e8f0;
+}
+
+.option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Radio buttons styling */
+input[type="radio"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: #4299e1;
+}
+
+/* Loading Spinner */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 6px solid #4299e1;
+  border-radius: 50%;
+  border-color: #4299e1 transparent transparent transparent;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes lds-ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Analysis Section */
+.analysis-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.analysis-heading {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.analysis-list {
+  list-style: none;
+}
+
+.analysis-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e1e8f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      margin: 0;
+      padding: 1rem;
+      border-radius: 0;
+  }
+
+  h1 {
+      font-size: 2em;
+  }
+}
+
+
+/* Add these styles to your existing style.css file */
+
+/* Dropdown styling fix */
+select option {
+  background: #2c5364; /* Dark background for options */
+  color: #ffffff; /* White text for options */
+  padding: 10px;
+}
+
+/* Improve select element for better visibility */
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+/* Style for when dropdown is opened */
+select:focus {
+  border-color: #4299e1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* Ensure text is visible when option is selected */
+select:focus option:checked,
+select option:checked {
+  background: #4299e1;
+  color: #ffffff;
+}
+
+/* Hover state for options */
+select option:hover {
+  background-color: #4299e1;
+  color: #ffffff;
+}
+
+
+/* Analysis Styling */
+.analysis-container {
+  animation: fadeIn 0.5s ease-out;
+  padding: 20px;
+}
+
+.analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.analysis-title {
+  font-size: 2rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.analysis-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.analysis-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.overall-judgment {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.judgment-content {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.judgment-icon {
+  font-size: 1.5rem;
+  color: #4299e1;
+}
+
+.cases-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.case-analysis-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.case-analysis-item:hover {
+  transform: translateY(-3px);
+}
+
+.case-analysis-item.correct {
+  border-left: 4px solid #48bb78;
+}
+
+.case-analysis-item.incorrect {
+  border-left: 4px solid #f56565;
+}
+
+.case-number {
+  font-size: 0.9rem;
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+.case-question {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.choices-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.choice {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.choice-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #a0aec0;
+  margin-bottom: 0.5rem;
+}
+
+.choice-value {
+  font-weight: 600;
+}
+
+.case-feedback {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.analysis-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.proceed-button {
+  background: linear-gradient(135deg, #4299e1, #667eea);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.proceed-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .choices-comparison {
+      grid-template-columns: 1fr;
+  }
+  
+  .analysis-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+  }
+}
+
+
+
+
+
+#allow_image {
+  width: 22px !important;
+  margin-right: 8px !important;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+h6 {
+  font-size: 1em;
+  margin: 0.5em 0;
+}
+#form-container {
+  margin-bottom: 20px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+select, input[type="text"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+#loading-spinner {
+  margin: 20px 0;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #000;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #000 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.hidden {
+  display: none;
+}
+.submit-button {
+  margin-top: 20px;
+}
+.case-image {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+
+
+/* Base styles for form controls */
+select,
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    
+    /* Background and color fixes */
+    background-color: rgba(40, 44, 52, 0.9); /* Darker, more opaque background */
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+    
+    /* Safari specific fixes */
+    -webkit-appearance: none;
+    appearance: none;
+    
+    /* Remove backdrop filter that might cause issues */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    
+    /* Transition for interactions */
+    transition: all 0.3s ease;
+}
+
+/* Dropdown arrow styling for Safari */
+select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%;
+    background-size: 1.2em auto;
+    padding-right: 2rem;
+}
+
+/* Placeholder styling */
+::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+::-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Focus states */
+select:focus,
+input[type="text"]:focus {
+    border-color: #4a9eff;
+    background-color: rgba(50, 54, 62, 0.95);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
+}
+
+/* Hover states */
+select:hover,
+input[type="text"]:hover {
+    background-color: rgba(50, 54, 62, 0.95);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Disabled states */
+select:disabled,
+input[type="text"]:disabled {
+    background-color: rgba(30, 34, 42, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+}
+
+/* Checkbox specific styling */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background-color: rgba(40, 44, 52, 0.9);
+    cursor: pointer;
+    position: relative;
+    margin-right: 8px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4a9eff;
+    border-color: #4a9eff;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Form group spacing */
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+/* Label styling */
+label {
+    font-weight: 500;
+    color: #020202;
+    margin-bottom: 0.25rem;
+    display: block;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Allow image container specific styling */
+#allow-image-container {
+    display: flex;
+    align-items: center;
+    margin: 0.25rem 0;
+}
+
+
+
+/* Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    select,
+    input[type="text"] {
+        font-size: 16px; /* Prevents zoom on focus in iOS */
+        line-height: 1.3;
+    }
+    
+    select {
+        text-indent: 1px; /* Prevents text cutoff in Safari */
+    }
+}

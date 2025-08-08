@@ -1,0 +1,1 @@
+# Data models for StyleTranslator will be defined here 
