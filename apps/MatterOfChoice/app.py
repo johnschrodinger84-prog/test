@@ -295,18 +295,11 @@ def reset():
     session[f'{user_id}_turn'] = 1
     conversation_filepath = BASE_DIR / f'output/{user_id}/game/conversation.json'
     analysis_filepath = BASE_DIR / f'output/{user_id}/game/analysis.json'
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({"error": "User ID is required."}), 400
-
-    session[f'{user_id}_turn'] = 1
-    conversation_filepath = BASE_DIR / f'output/{user_id}/game/conversation.json'
-    analysis_filepath = BASE_DIR / f'output/{user_id}/game/analysis.json'
     if conversation_filepath.exists():
         conversation_filepath.unlink()
     if analysis_filepath.exists():
         analysis_filepath.unlink()
-    return jsonify({"message": "Session reset and files deleted."}), 200
+    return Response(json.dumps({"message": "Session reset and files deleted."}), status=200, mimetype='application/json')
 
 @app.route('/converse', methods=['POST'])
 def converse():
