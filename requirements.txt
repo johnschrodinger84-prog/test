@@ -10,3 +10,16 @@ requests==2.31.0
 python-magic==0.4.27
 uuid==1.30 
 Pillow==10.0.0
+click
+Flask
+google-generativeai
+itsdangerous
+Jinja2
+MarkupSafe
+Pillow
+pytest
+python-dotenv
+python-magic
+requests
+uuid
+Werkzeug
