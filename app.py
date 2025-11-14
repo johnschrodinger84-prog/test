@@ -15,7 +15,7 @@ except KeyError:
 APP_NAME_TO_MODULE = {
     "diet-tracker": "DietTracker",
     "one-click-trip": "OneClickTrip",
-    "matter-of-choice-analysis": "MatterOfChoice",
+    "matter_of_choice": "MatterOfChoice",
     "style-translator": "StyleTranslator",
     "school-killer": "SchoolKiller",
 }
@@ -29,7 +29,7 @@ def direct_tunnel():
     if not data or "parts" not in data:
         return jsonify({"error": "Invalid request body. 'parts' is required."}), 400
 
-    model_name = data.get("model_name", "gemini-2.5-flash-latest")
+    model_name = data.get("model_name", "gemini-2.5-pro")
     model = genai.GenerativeModel(model_name)
     
     try:
@@ -49,6 +49,7 @@ def universal_prompting_engine():
         return jsonify({"error": "Invalid request body. 'app_name' and 'data' are required."}), 400
 
     app_name = data["app_name"]
+    print(app_name)
     app_data = data["data"]
 
     module_name = APP_NAME_TO_MODULE.get(app_name)

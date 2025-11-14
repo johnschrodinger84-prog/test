@@ -33,7 +33,7 @@ Provides direct access to the Gemini API. Use this for general conversations or 
   * **Request Body**: `application/json`
     ```json
     {
-      "model_name": "gemini-1.5-flash-latest",
+      "model_name": "gemini-2.5-flash",
       "parts": [
         {"text": "What is in this image?"},
         {"file_url": "https://.../uploads/image.jpg"}
@@ -60,61 +60,77 @@ This is the primary endpoint for all front-end applications. It uses internal lo
       * **`app_name`** (string, required): The unique identifier for the calling application.
       * **`data`** (object, required): The payload containing data specific to that application's prompt.
 
-  * **Example 1: Diet Tracker Request**
+  * **Example 1: Calories Request**
 
     ```json
     {
-      "app_name": "diet-tracker",
+      "app_name": "calorie_tracker",
       "data": {
-        "food_item": "1 large banana",
-        "user_id": "user-123",
-        "meal_type": "snack"
+        "user_task": "Analyze the nutritional content of this meal.",
+        "is_image_used": true,
+        "selected_solution_language": "English",
+        "edited_recognized_text": "A plate of pasta with tomato sauce and meatballs."
       }
     }
     ```
 
-  * **Example 2: One-Click Trip Request**
+  * **Example 2: Diet Tracker Request**
 
     ```json
     {
-      "app_name": "one-click-trip",
+      "app_name": "diet_tracker",
       "data": {
-        "origin": "Addis Ababa",
-        "city_paths": ["Nairobi", "Dar es Salaam"],
-        "max_budget": 500,
-        "travelers_number": 2
+        "user_task": "Provide a daily meal plan for weight loss.",
+        "is_image_used": false,
+        "selected_solution_language": "English",
+        "physical_activity": "moderate",
+        "gender": "female",
+        "age": 30,
+        "height": 165.0,
+        "weight": 65.0,
+        "edited_recognized_text": "I prefer vegetarian meals."
       }
     }
     ```
 
-  * **Example 3: Matter of Choice Analysis Request**
+  * **Example 3: Matter of Choice Request**
 
     ```json
     {
-      "app_name": "matter-of-choice-analysis",
+      "app_name": "matter_of_choice",
       "data": {
-        "language": "English",
-        "role": "Hiring Manager",
-        "question_type": "hiring",
+        "user_task": "Analyze the user's choices in a behavioral scenario.",
+        "is_image_used": false,
+        "selected_solution_language": "English",
+        "role": "Psychologist",
         "cases": [
           {
-            "case_id": "h-001",
-            "question": "How do you handle tight deadlines?",
-            "user_answer": "I prioritize tasks and communicate potential delays early."
+            "question": "You find a wallet on the street. What do you do?",
+            "user_answer": "Return it to the owner."
           }
-        ]
+        ],
+        "edited_recognized_text": "User is generally honest."
       }
     }
     ```
 
-  * **Example 4: Style Translator Request**
+  * **Example 4: One-Click Trip Request**
 
     ```json
     {
-      "app_name": "style-translator",
+      "app_name": "one_click_trip",
       "data": {
-        "source_text": "It is with great pleasure that I accept your forthcoming invitation to the gala.",
-        "target_style": "informal and excited"
+        "user_task": "Plan a romantic getaway.",
+        "is_image_used": false,
+        "selected_solution_language": "English",
+        "origin_location": "New York",
+        "city_paths": ["Paris", "Rome"],
+        "transportation_types": ["flight"],
+        "trip_styles": ["romantic", "sightseeing"],
+        "max_budget": 5000,
+        "trip_duration": 7,
+        "travelers_number": 2,
+        "is_one_way": false
       }
     }
     ```
@@ -125,8 +141,27 @@ This is the primary endpoint for all front-end applications. It uses internal lo
     {
       "app_name": "school-killer",
       "data": {
-        "subject": "Physics",
-        "problem_description": "A 2kg ball is dropped from a height of 10m. What is its velocity just before it hits the ground, ignoring air resistance?"
+        "user_task": "Solve this math problem.",
+        "is_image_used": false,
+        "selected_solution_language": "English",
+        "subject": "Mathematics",
+        "problem_description": "What is the derivative of x^2?",
+        "edited_recognized_text": "Show step-by-step solution."
+      }
+    }
+    ```
+
+  * **Example 6: Style Translator Request**
+
+    ```json
+    {
+      "app_name": "style-translator",
+      "data": {
+        "user_task": "Translate and rephrase this text.",
+        "selected_solution_language": "French",
+        "edited_recognized_text": "Hello, how are you doing today?",
+        "tone_preference": "formal",
+        "style": "polite"
       }
     }
     ```

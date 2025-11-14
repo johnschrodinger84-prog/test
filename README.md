@@ -1,151 +1,101 @@
-# Modular Flask Server
+# Intelliverse Server
 
-This is a modular Flask server that hosts multiple independent applications under a single server instance. Each application is implemented as a Flask Blueprint, allowing for clean separation of concerns and easy addition of new applications.
+## Overview
+
+The Intelliverse Server is a Python-based backend application designed to host a suite of AI-powered tools. It leverages the Gemini API to provide various functionalities, from diet tracking and trip planning to style translation and educational assistance. The server is built with a modular architecture, allowing for easy integration of new applications.
+
+## Features
+
+The server currently includes the following applications:
+
+*   **Calories:** A tool for tracking and analyzing calorie intake, likely based on user input or recognized text from images.
+*   **DietTracker:** A comprehensive diet tracking application that considers physical activity, gender, age, height, and weight to provide personalized dietary insights.
+*   **MatterOfChoice:** An interactive application that handles user prompts related to roles and cases, suggesting a decision-making or scenario-based tool.
+*   **OneClickTrip:** A trip planning application that helps users organize travel based on origin, city paths, transportation types, trip styles, budget, duration, and number of travelers.
+*   **SchoolKiller:** An educational assistant designed to help with various school subjects by processing problem descriptions.
+*   **StyleTranslator:** A tool for translating text style, offering parameters like tone, mentality, transformation level, and demographic considerations.
 
 ## Project Structure
 
+The project is organized into the following key directories:
+
+*   `apps/`: Contains individual AI-powered applications, each in its own subdirectory.
+    *   `apps/core/`: Houses core functionalities shared across applications, such as `PromptService` for building prompts and `GeminiService` for interacting with the Gemini API.
+*   `shared/`: Contains common utilities, middleware, and constants used throughout the server.
+*   `templates/`: Stores HTML templates for the web interface.
+*   `config.py`: Configuration settings for the server.
+*   `main.py`: The primary entry point for running the Flask server and routing requests to the appropriate applications.
+*   `app.py`: Initializes the Flask application and registers blueprints.
+*   `requirements.txt`: Lists all Python dependencies required for the project.
+*   `test_all_apps.py`: Contains tests for the various applications.
+
+## Setup and Installation
+
+To set up and run the Intelliverse Server, follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd Intelliverse-server
+    ```
+    (Note: You are already in the project directory, so this step is for future reference.)
+
+2.  **Create a virtual environment:**
+    It's highly recommended to use a virtual environment to manage project dependencies.
+    ```bash
+    python -m venv venv
+    ```
+
+3.  **Activate the virtual environment:**
+    *   **On Windows:**
+        ```bash
+        .\venv\Scripts\activate
+        ```
+    *   **On macOS/Linux:**
+        ```bash
+        source venv/bin/activate
+        ```
+
+4.  **Install dependencies:**
+    Install all required Python packages using pip:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5.  **Configure the server:**
+    Edit `config.py` to set up any necessary configurations, such as API keys for the Gemini API.
+
+## Running the Server
+
+Once the setup is complete, you can run the server using `main.py`:
+
+```bash
+python main.py
 ```
-.
-├── apps/                           # Contains all application modules
-│   ├── core/                      # Core application services
-│   │   ├── __init__.py           # Core package initialization
-│   │   ├── prompt_service.py     # Shared prompt building service
-│   │   └── README.md             # Core module documentation
-│   ├── OneClickTrip/             # OneClickTrip application
-│   │   ├── __init__.py          # Blueprint registration
-│   │   ├── main.py              # Main application logic
-│   │   └── routes.py            # Route definitions (future use)
-│   ├── Calories/                # Calories application
-│   │   ├── __init__.py         # Blueprint registration
-│   │   ├── main.py            # Main application logic
-│   │   └── routes.py          # Route definitions (future use)
-│   ├── SchoolKiller/          # SchoolKiller application
-│   │   ├── __init__.py       # Blueprint registration
-│   │   ├── main.py          # Main application logic
-│   │   └── routes.py        # Route definitions (future use)
-│   └── StyleTranslator/     # StyleTranslator application
-├── config.py                # Configuration settings
-├── main.py                 # Main server file
-├── requirements.txt        # Project dependencies
-└── .gitignore             # Git ignore patterns
+
+This will start the Flask development server, and you should see output indicating that the server is running, typically on `http://127.0.0.1:5000/` or a similar address.
+
+## API Endpoints
+
+The server exposes various API endpoints, primarily handled by the `main.py` and `app.py` files in the root, which route requests to the `handle_prompt` function within each application's `main.py` file.
+
+Each application's `handle_prompt` function expects a `data` dictionary containing specific parameters. Common parameters include:
+
+*   `user_task` (str): The user's specific request or task.
+*   `is_image_used` (bool): Indicates whether an image is part of the input.
+*   `selected_solution_language` (str): The desired language for the solution.
+*   `edited_recognized_text` (str, optional): Text recognized from an image, potentially edited by the user.
+
+Application-specific parameters are also required, as detailed in each application's `main.py` file.
+
+## Configuration
+
+The `config.py` file is used for server-wide configurations. This is where you would typically store sensitive information like API keys or adjust server settings.
+
+## Testing
+
+The project includes a `test_all_apps.py` file for testing the functionality of the integrated applications. To run the tests, ensure you have `pytest` installed (it should be included in `requirements.txt`) and run:
+
+```bash
+pytest
 ```
-
-## Applications
-
-Each application is accessible through its own URL prefix and provides a `/build_prompt` endpoint for prompt generation:
-
-1. **OneClickTrip** - URL prefix: `/oneclicktrip`
-   - Builds prompts for travel planning
-   - Supports parameters like origin, trip type, cities, transportation, etc.
-
-2. **Calories** - URL prefix: `/calories`
-   - Builds prompts for calorie tracking and nutrition
-   - Uses base parameters for prompt construction
-
-3. **SchoolKiller** - URL prefix: `/schoolkiller`
-   - Builds prompts for educational assistance
-   - Supports parameters like grade level and detail level
-
-4. **StyleTranslator** - URL prefix: `/styletranslator`
-   - Builds prompts for style transformation
-   - Supports various style parameters like tone, gender, age, etc.
-
-## Common Endpoints
-
-All applications implement the following endpoints:
-
-1. **Index** (`GET /`)
-   - Returns welcome message and API documentation
-   - Lists available endpoints and their parameters
-
-2. **Build Prompt** (`PUT /build_prompt`)
-   - Common base parameters:
-     - `user_task` (string): The main task description
-     - `is_image_used` (boolean): Whether image analysis is needed
-     - `selected_solution_language` (string): Language for the response
-     - `edited_recognized_text` (string, optional): Additional context
-   - App-specific parameters vary by application
-
-## Recent Changes
-
-1. **Blueprint Structure**
-   - Standardized blueprint registration across all apps
-   - Moved route definitions to `main.py`
-   - Reserved `routes.py` for future route additions
-   - Fixed blueprint naming conflicts
-
-2. **Prompt Service**
-   - Added shared `PromptService` in core module
-   - Implemented app-specific prompt builders
-   - Added caching for prompt generation
-   - Standardized parameter handling
-
-3. **Error Handling**
-   - Added consistent error responses
-   - Improved parameter validation
-   - Added proper HTTP status codes
-
-## Setup Instructions
-
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the server:
-   ```bash
-   python main.py
-   ```
-
-The server will start in development mode on `http://localhost:5000`
-
-## Adding New Applications
-
-To add a new application:
-
-1. Create a new directory under `apps/`
-2. Create the necessary files:
-   - `__init__.py` - Import blueprint from main.py
-   - `main.py` - Define blueprint and implement routes
-   - `routes.py` - Reserved for future route additions
-3. Implement the required endpoints:
-   - Index route (`/`)
-   - Build prompt route (`/build_prompt`)
-4. Register the blueprint in `main.py`
-
-## Error Handling
-
-The server includes comprehensive error handling for:
-- 404 Not Found errors
-- 405 Method Not Allowed errors
-- 400 Bad Request errors (invalid parameters)
-- 500 Internal Server errors
-
-All errors return JSON responses with appropriate status codes and error messages.
-
-## Development Guidelines
-
-1. **Blueprint Naming**
-   - Use consistent naming (e.g., 'oneclicktrip', 'calories')
-   - Match URL prefix with blueprint name
-
-2. **Parameter Validation**
-   - Validate all required parameters
-   - Use type checking for parameters
-   - Provide clear error messages
-
-3. **Documentation**
-   - Keep README.md updated
-   - Document all endpoints
-   - Include example requests/responses
-
-4. **Code Organization**
-   - Keep routes in main.py
-   - Use routes.py for future additions
-   - Follow consistent file structure 

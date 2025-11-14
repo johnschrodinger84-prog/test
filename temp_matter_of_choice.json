@@ -1,0 +1,15 @@
+{
+    "app_name": "matter_of_choice",
+    "data": {
+        "user_task": "Analyze the user's answer",
+        "is_image_used": false,
+        "selected_solution_language": "en",
+        "role": "interviewer",
+        "cases": [
+            {
+                "question": "What is your greatest weakness?",
+                "user_answer": "I work too hard."
+            }
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "app_name": "one-click-trip",
+    "data": {
+        "user_task": "Plan a trip to Paris",
+        "is_image_used": false,
+        "selected_solution_language": "en",
+        "origin_location": "New York",
+        "city_paths": ["Paris"],
+        "transportation_types": ["flight", "train"],
+        "trip_styles": ["sightseeing", "gastronomy"],
+        "max_budget": 2000,
+        "trip_duration": 7,
+        "travelers_number": 2
+    }
+}

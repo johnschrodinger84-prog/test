@@ -13,11 +13,12 @@ class PromptService:
         
         # App-specific prompt templates
         self.prompt_templates = {
-            'school_killer': self._build_school_killer_prompt,
-            'style_translator': self._build_style_translator_prompt,
+            'school-killer': self._build_school_killer_prompt,
+            'style-translator': self._build_style_translator_prompt,
             'diet_tracker': self._build_diet_tracker_prompt,
             'one_click_trip': self._build_one_click_trip_prompt,
-            'calorie_tracker': self._build_calories_prompt
+            'calorie_tracker': self._build_calories_prompt,
+            'matter_of_choice': self._build_matter_of_choice_prompt
         }
 
     def _generate_cache_key(self, app_name: str, base_params: Dict[str, Any], app_specific_params: Dict[str, Any]) -> str:
@@ -69,10 +70,14 @@ class PromptService:
         """Builds a prompt for SchoolKiller app."""
         prompt = f"Task: {base_params['user_task']}\n"
         prompt += f"Language: {base_params['selected_solution_language']}\n"
-        
+
         if base_params.get('edited_recognized_text'):
             prompt += f"Context: {base_params['edited_recognized_text']}\n"
             
+        if app_params.get('subject'):
+            prompt += f"Subject: {app_params['subject']}"
+        if app_params.get('problem_description'):
+            prompt += f"Problem: {app_params['problem_description']}\n"
         if app_params.get('details_level'):
             prompt += f"Detail Level: {app_params['details_level']}\n"
         if app_params.get('grade'):
@@ -156,4 +161,21 @@ class PromptService:
         if base_params.get('is_image_used'):
             prompt += "Note: Image analysis will be performed for food recognition\n"
             
-        return prompt 
+        return prompt
+
+    def _build_matter_of_choice_prompt(self, base_params, app_params):
+        """Builds a prompt for MatterOfChoice app."""
+        prompt = f"Task: {base_params['user_task']}\n"
+        prompt += f"Language: {base_params['selected_solution_language']}\n"
+        
+        if base_params.get('edited_recognized_text'):
+            prompt += f"Context: {base_params['edited_recognized_text']}\n"
+            
+        if app_params.get('role'):
+            prompt += f"Role: {app_params['role']}\n"
+        if app_params.get('cases'):
+            for case in app_params['cases']:
+                prompt += f"Question: {case.get('question')}\n"
+                prompt += f"User Answer: {case.get('user_answer')}\n"
+                
+        return prompt

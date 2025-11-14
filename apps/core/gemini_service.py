@@ -26,6 +26,7 @@ class GeminiService:
         try:
             logger.debug(f"Initializing GeminiService with model: {model_name}")
             self.api_key = os.getenv("GENERATIVE_AI_API_KEY")
+            logger.debug(f"API Key: {self.api_key}")
             if not self.api_key:
                 logger.error("GENERATIVE_AI_API_KEY is not set")
                 raise ValueError("GENERATIVE_AI_API_KEY is not set")
@@ -51,14 +52,17 @@ class GeminiService:
                 return None
 
             image, prompt = prompt_data
-            if not isinstance(image, Image.Image):
+            if image and not isinstance(image, Image.Image):
                 logger.error("Invalid image format")
                 return None
 
             logger.debug("Generating content with image and prompt")
             # Generate content
-            response = self.model.generate_content([image, prompt])
-            logger.debug("Received response from Gemini")
+            if image:
+                response = self.model.generate_content([image, prompt])
+            else:
+                response = self.model.generate_content([prompt])
+            logger.debug(f"Received response from Gemini: {response}")
             
             if response and hasattr(response, 'text'):
                 logger.debug("Successfully extracted text from response")
@@ -69,4 +73,4 @@ class GeminiService:
 
         except Exception as e:
             logger.error(f"Failed to generate response: {str(e)}", exc_info=True)
-            return None 
+            return None

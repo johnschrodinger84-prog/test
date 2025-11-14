@@ -1,0 +1,14 @@
+{
+    "app_name": "diet-tracker",
+    "data": {
+        "user_task": "What are the nutritional values of a banana?",
+        "is_image_used": false,
+        "selected_solution_language": "en",
+        "food_item": "banana",
+        "physical_activity": "sedentary",
+        "gender": "female",
+        "age": 25,
+        "height": 170.0,
+        "weight": 65.0
+    }
+}

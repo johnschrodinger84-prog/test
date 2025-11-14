@@ -1,0 +1,10 @@
+{
+    "app_name": "style-translator",
+    "data": {
+        "user_task": "Translate text to a more formal style",
+        "selected_solution_language": "en",
+        "edited_recognized_text": "Hey, what's up?",
+        "tone_preference": "formal",
+        "style": "professional"
+    }
+}
