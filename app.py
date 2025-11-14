@@ -2,15 +2,17 @@ from flask import Flask, request, jsonify
 import os
 import google.generativeai as genai
 import importlib
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-# Configure the Gemini API key
-try:
-    genai.configure(api_key="AIzaSyBPj2k-0MK-0MQrGp7stbtDa0z3XwTBd6w")
-except KeyError:
-    print("GEMINI_API_KEY environment variable not set.")
-    exit()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+else:
+    print("Warning: GEMINI_API_KEY environment variable not set.")
 
 APP_NAME_TO_MODULE = {
     "diet-tracker": "DietTracker",
@@ -69,4 +71,4 @@ def universal_prompting_engine():
         return jsonify({"error": f'Error processing prompt for "{app_name}": {str(e)}'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

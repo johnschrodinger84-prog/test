@@ -3,8 +3,10 @@ StyleTranslator main module.
 Contains the main application logic for the Universal Prompting Engine.
 """
 
+from flask import Blueprint, request, jsonify
 from apps.core.prompt_service import PromptService
 
+bp = Blueprint('styletranslator', __name__, url_prefix='/styletranslator')
 prompt_service = PromptService()
 
 def handle_prompt(data):

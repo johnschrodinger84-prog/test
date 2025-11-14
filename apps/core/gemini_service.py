@@ -25,11 +25,11 @@ class GeminiService:
     def __init__(self, model_name):
         try:
             logger.debug(f"Initializing GeminiService with model: {model_name}")
-            self.api_key = os.getenv("GENERATIVE_AI_API_KEY")
+            self.api_key = os.getenv("GEMINI_API_KEY")
             logger.debug(f"API Key: {self.api_key}")
             if not self.api_key:
-                logger.error("GENERATIVE_AI_API_KEY is not set")
-                raise ValueError("GENERATIVE_AI_API_KEY is not set")
+                logger.error("GEMINI_API_KEY is not set")
+                raise ValueError("GEMINI_API_KEY is not set")
 
             logger.debug("Configuring Gemini API")
             genai.configure(api_key=self.api_key)

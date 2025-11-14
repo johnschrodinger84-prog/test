@@ -2,4 +2,6 @@
 SchoolKiller package initialization.
 """
 
-# No blueprint to import for SchoolKiller 
+from apps.SchoolKiller.main import bp
+
+__all__ = ['bp'] 

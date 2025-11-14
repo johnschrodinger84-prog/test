@@ -1,22 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-import os
-import json
-import logging
-import time
-import requests
-from huggingface_hub import InferenceClient
-from pathlib import Path
-from io import BytesIO
-import base64
-from PIL import Image
-from utils import gen_cases, get_response_gemini  # keep these for other endpoints
-from image import get_info_from_image  # for image analysis
-import time
-from dotenv import load_dotenv
-import threading
-load_dotenv()
-
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response
 import os
 import json
 import logging

@@ -3,9 +3,11 @@ DietTracker main module.
 Contains the main application logic for the Universal Prompting Engine.
 """
 
+from flask import Blueprint, request, jsonify
 from apps.core.prompt_service import PromptService
 from apps.core.gemini_service import GeminiService
 
+bp = Blueprint('diet_tracker', __name__, url_prefix='/diet_tracker')
 prompt_service = PromptService()
 
 def handle_prompt(data):

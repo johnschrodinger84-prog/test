@@ -3,9 +3,11 @@ OneClickTrip main module.
 Contains the main application logic for the Universal Prompting Engine.
 """
 
+from flask import Blueprint, request, jsonify
 from apps.core.prompt_service import PromptService
 from apps.core.gemini_service import GeminiService
 
+bp = Blueprint('oneclicktrip', __name__, url_prefix='/oneclicktrip')
 prompt_service = PromptService()
 
 def handle_prompt(data):
