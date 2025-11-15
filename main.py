@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from apps.core.gemini_service import GeminiAPIKeyMissingError
 
-load_dotenv()
+load_dotenv(override=True)
 
 def create_app():
     app = Flask(__name__)
