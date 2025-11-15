@@ -53,7 +53,11 @@ def upload_file():
 def converse():
     """Handles conversation requests with Gemini AI."""
     try:
-        data = request.json
+        try:
+            data = request.json
+        except Exception:
+            return jsonify({'error': 'Invalid JSON in request body'}), 400
+            
         if not data:
             return jsonify({'error': 'No data provided'}), 400
 

@@ -47,7 +47,7 @@ def test_api_direct_missing_api_key():
     try:
         payload = {
             "parts": ["What is 2+2?"],
-            "model_name": "gemini-2.0-flash-exp"
+            "model_name": "gemini-2.5-flash"
         }
         response = requests.post(
             f"{BASE_URL}/api/direct",
@@ -66,7 +66,7 @@ def test_api_direct_invalid_request():
     print("Test Case: Invalid request - missing 'parts'")
     try:
         payload = {
-            "model_name": "gemini-2.0-flash-exp"
+            "model_name": "gemini-2.5-flash"
         }
         response = requests.post(
             f"{BASE_URL}/api/direct",
