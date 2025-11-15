@@ -50,7 +50,7 @@ def handle_prompt(data):
         app_specific_params=diet_params
     )
 
-    gemini_service = GeminiService(model_name='gemini-1.5-flash-latest')
+    gemini_service = GeminiService(model_name='gemini-flash-latest')
     response = gemini_service.generate_response([None, prompt])
 
     return {"response": response}

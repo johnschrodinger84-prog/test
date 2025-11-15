@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class SolutionHandler:
     def __init__(self):
         self.max_retries = 3
-        self.model_name = 'gemini-1.5-flash'  # Updated to use the newer model
+        self.model_name = 'gemini-flash-latest'  # Updated to use the newer model
 
     def process_solution_request(self, prompt: str, images: List[Image.Image]) -> Tuple[List[Dict[str, str]], Optional[str]]:
         """

@@ -41,7 +41,7 @@ def handle_prompt(data):
         }
     )
 
-    gemini_service = GeminiService(model_name='gemini-1.5-flash-latest')
+    gemini_service = GeminiService(model_name='gemini-flash-latest')
     response = gemini_service.generate_response([None, prompt])
 
     return {"response": response}

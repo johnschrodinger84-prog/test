@@ -27,7 +27,7 @@ genai.configure(api_key=GENAI_API_KEY)
 def get_info_from_image(image_file, prompt):
     # Configure Google API
     genai.configure(api_key=GENAI_API_KEY)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-flash-latest')
 
     # Open image
     img = Image.open(image_file)

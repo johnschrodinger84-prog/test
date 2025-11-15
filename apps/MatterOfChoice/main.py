@@ -13,7 +13,7 @@ def handle_prompt(data, prompt_service=None, gemini_service=None):
         prompt_service = PromptService()
 
     if gemini_service is None:
-        gemini_service = GeminiService(model_name='gemini-1.5-flash-latest')
+        gemini_service = GeminiService(model_name='gemini-flash-latest')
 
     required_params = {
         'user_task': str,
