@@ -61,3 +61,6 @@ temp_*.json
 cookie.txt
 flask_app.log
 data/
+
+.replit
+replit.md

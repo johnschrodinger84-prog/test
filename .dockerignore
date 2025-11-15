@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+.pythonlibs/
+
+# Flask
+instance/
+.webassets-cache
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README.md
+API_CLIENT_GUIDE.md
+LANDING_PAGE.md
+
+# Tests
+tests/
+test_*.py
+*_test.py
+pytest.ini
+.pytest_cache/
+
+# Logs
+*.log
+/tmp/
+
+# Replit specific
+.replit
+replit.nix
+.config/
+.cache/
+.upm/
+replit.md
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Uploads (optional - uncomment if you don't want to include uploaded files)
+# uploads/
