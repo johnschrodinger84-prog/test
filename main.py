@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
 from config import Config
 import importlib
 import os
@@ -11,6 +12,9 @@ load_dotenv(override=True)
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    
+    # Enable CORS for all routes
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     # Configure Gemini API
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
