@@ -1,4 +1,4 @@
-from .gemini_service import GeminiService
+from .gemini_service import GeminiService, GeminiAPIKeyMissingError
 
 class ConversationHandler:
     def __init__(self):
@@ -58,5 +58,8 @@ class ConversationHandler:
             response = gemini_service.generate_response(prompt_data)
             return response, None
 
+        except GeminiAPIKeyMissingError:
+            # Re-raise to allow route-level handling
+            raise
         except Exception as e:
             return None, f"Gemini API request failed: {str(e)}" 

@@ -21,6 +21,10 @@ def get_model(model_name):
         model_cache[model_name] = genai.GenerativeModel(model_name)
     return model_cache[model_name]
 
+class GeminiAPIKeyMissingError(Exception):
+    """Raised when GEMINI_API_KEY is not configured."""
+    pass
+
 class GeminiService:
     def __init__(self, model_name):
         try:
@@ -29,13 +33,15 @@ class GeminiService:
             logger.debug(f"API Key: {self.api_key}")
             if not self.api_key:
                 logger.error("GEMINI_API_KEY is not set")
-                raise ValueError("GEMINI_API_KEY is not set")
+                raise GeminiAPIKeyMissingError("GEMINI_API_KEY is not set")
 
             logger.debug("Configuring Gemini API")
             genai.configure(api_key=self.api_key)
             self.model = get_model(model_name)
             logger.debug("GeminiService initialized successfully")
 
+        except GeminiAPIKeyMissingError:
+            raise
         except Exception as e:
             logger.error(f"Failed to initialize AI services: {str(e)}", exc_info=True)
             raise RuntimeError(f"Failed to initialize AI services: {str(e)}")

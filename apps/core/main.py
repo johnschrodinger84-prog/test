@@ -10,6 +10,7 @@ from flask import Blueprint, request, jsonify, current_app
 from .file_handler import FileHandler
 from .conversation_handler import ConversationHandler
 from .solution_handler import SolutionHandler
+from .gemini_service import GeminiAPIKeyMissingError
 from PIL import Image
 
 # Set up logging
@@ -75,6 +76,8 @@ def converse():
 
         return jsonify({'response': response}), 200
 
+    except GeminiAPIKeyMissingError:
+        return jsonify({'error': 'GEMINI_API_KEY is not configured. Please set it in Replit Secrets.'}), 503
     except Exception as e:
         return jsonify({'error': f'Request failed: {str(e)}'}), 500
 
@@ -155,6 +158,8 @@ def generate_solutions():
         logger.info("Request completed successfully")
         return jsonify({'solutions': solutions}), 200
 
+    except GeminiAPIKeyMissingError:
+        return jsonify({'error': 'GEMINI_API_KEY is not configured. Please set it in Replit Secrets.'}), 503
     except Exception as e:
         logger.error(f"Request failed with exception: {str(e)}", exc_info=True)
         return jsonify({'error': f'Request failed: {str(e)}'}), 500

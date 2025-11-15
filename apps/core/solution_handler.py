@@ -2,7 +2,7 @@ import logging
 from typing import List, Dict, Tuple, Optional
 from PIL import Image
 from flask import current_app
-from .gemini_service import GeminiService
+from .gemini_service import GeminiService, GeminiAPIKeyMissingError
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -87,6 +87,9 @@ class SolutionHandler:
             logger.error("No solutions could be generated")
             return [], "No solutions could be generated"
 
+        except GeminiAPIKeyMissingError:
+            # Re-raise to allow route-level handling
+            raise
         except Exception as e:
             logger.error(f"Solution generation failed: {str(e)}", exc_info=True)
             return [], f"Solution generation failed: {str(e)}" 

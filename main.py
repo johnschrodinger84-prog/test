@@ -4,6 +4,7 @@ import importlib
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
+from apps.core.gemini_service import GeminiAPIKeyMissingError
 
 load_dotenv()
 
@@ -21,8 +22,8 @@ def create_app():
     # Import core blueprint (has actual routes)
     from apps.core.main import bp as core_bp
     
-    # Register core blueprint
-    app.register_blueprint(core_bp, url_prefix='/core')
+    # Register core blueprint (it already has url_prefix='/core' defined)
+    app.register_blueprint(core_bp)
 
     # App name to module mapping for Universal Prompting Engine
     APP_NAME_TO_MODULE = {
@@ -38,6 +39,9 @@ def create_app():
     @app.route('/api/direct', methods=['POST'])
     def direct_tunnel():
         """Provides raw, unstructured access to the Gemini API for general-purpose queries."""
+        if not GEMINI_API_KEY:
+            return jsonify({"error": "GEMINI_API_KEY is not configured. Please set it in Replit Secrets."}), 503
+            
         data = request.get_json()
         if not data or "parts" not in data:
             return jsonify({"error": "Invalid request body. 'parts' is required."}), 400
@@ -54,6 +58,9 @@ def create_app():
     @app.route('/api/prompt', methods=['POST'])
     def universal_prompting_engine():
         """Provides structured, application-aware access to the Gemini API by using predefined prompt templates."""
+        if not GEMINI_API_KEY:
+            return jsonify({"error": "GEMINI_API_KEY is not configured. Please set it in Replit Secrets."}), 503
+            
         data = request.get_json()
         if not data or "app_name" not in data or "data" not in data:
             return jsonify({"error": "Invalid request body. 'app_name' and 'data' are required."}), 400
@@ -74,6 +81,10 @@ def create_app():
             return jsonify({"error": f'Application "{app_name}" not found'}), 404
         except AttributeError:
             return jsonify({"error": f'Application "{app_name}" does not have a handle_prompt function'}), 500
+        except GeminiAPIKeyMissingError:
+            return jsonify({"error": "GEMINI_API_KEY is not configured. Please set it in Replit Secrets."}), 503
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
         except Exception as e:
             return jsonify({"error": f'Error processing prompt for "{app_name}": {str(e)}'}), 500
 
