@@ -1,13 +1,12 @@
 """
 SchoolKiller main module.
 Contains the main application logic for the Universal Prompting Engine.
+This module is called programmatically via the /api/prompt endpoint.
 """
 
-from flask import Blueprint, request, jsonify
 from apps.core.prompt_service import PromptService
 from apps.core.gemini_service import GeminiService
 
-bp = Blueprint('schoolkiller', __name__, url_prefix='/schoolkiller')
 prompt_service = PromptService()
 
 def handle_prompt(data):

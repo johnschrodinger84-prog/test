@@ -1,7 +1,4 @@
 """
 Calories package initialization.
-"""
-
-from apps.Calories.main import bp
-
-__all__ = ['bp'] 
+This module is accessed via the Universal Prompting Engine (/api/prompt).
+""" 

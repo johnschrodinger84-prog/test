@@ -1,25 +1,81 @@
 from flask import Flask, jsonify, render_template, request
 from config import Config
+import importlib
+import os
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Import blueprints
-    from apps.OneClickTrip import bp as oneclicktrip_bp
-    from apps.Calories import bp as calories_bp
-    from apps.SchoolKiller import bp as schoolkiller_bp
-    from apps.StyleTranslator import bp as styletranslator_bp
-    from apps.core.main import bp as core_bp
-    from apps.DietTracker.main import bp as diet_tracker_bp
+    # Configure Gemini API
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    if GEMINI_API_KEY:
+        genai.configure(api_key=GEMINI_API_KEY)
+    else:
+        print("Warning: GEMINI_API_KEY environment variable not set.")
 
-    # Register blueprints
-    app.register_blueprint(oneclicktrip_bp, url_prefix='/oneclicktrip')
-    app.register_blueprint(calories_bp, url_prefix='/calories')
-    app.register_blueprint(schoolkiller_bp, url_prefix='/schoolkiller')
-    app.register_blueprint(styletranslator_bp, url_prefix='/styletranslator')
+    # Import core blueprint (has actual routes)
+    from apps.core.main import bp as core_bp
+    
+    # Register core blueprint
     app.register_blueprint(core_bp, url_prefix='/core')
-    app.register_blueprint(diet_tracker_bp, url_prefix='/diet_tracker')
+
+    # App name to module mapping for Universal Prompting Engine
+    APP_NAME_TO_MODULE = {
+        "diet-tracker": "DietTracker",
+        "one-click-trip": "OneClickTrip",
+        "matter_of_choice": "MatterOfChoice",
+        "style-translator": "StyleTranslator",
+        "school-killer": "SchoolKiller",
+        "calories": "Calories",
+    }
+
+    # Universal Prompting Engine endpoints
+    @app.route('/api/direct', methods=['POST'])
+    def direct_tunnel():
+        """Provides raw, unstructured access to the Gemini API for general-purpose queries."""
+        data = request.get_json()
+        if not data or "parts" not in data:
+            return jsonify({"error": "Invalid request body. 'parts' is required."}), 400
+
+        model_name = data.get("model_name", "gemini-2.5-pro")
+        model = genai.GenerativeModel(model_name)
+        
+        try:
+            response = model.generate_content(data["parts"])
+            return jsonify({"response": response.text})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    @app.route('/api/prompt', methods=['POST'])
+    def universal_prompting_engine():
+        """Provides structured, application-aware access to the Gemini API by using predefined prompt templates."""
+        data = request.get_json()
+        if not data or "app_name" not in data or "data" not in data:
+            return jsonify({"error": "Invalid request body. 'app_name' and 'data' are required."}), 400
+
+        app_name = data["app_name"]
+        app_data = data["data"]
+
+        module_name = APP_NAME_TO_MODULE.get(app_name)
+        if not module_name:
+            return jsonify({"error": f"Unknown app_name: {app_name}"}), 400
+
+        try:
+            app_module = importlib.import_module(f'apps.{module_name}.main')
+            response_data = app_module.handle_prompt(app_data)
+            return jsonify(response_data)
+
+        except ImportError:
+            return jsonify({"error": f'Application "{app_name}" not found'}), 404
+        except AttributeError:
+            return jsonify({"error": f'Application "{app_name}" does not have a handle_prompt function'}), 500
+        except Exception as e:
+            return jsonify({"error": f'Error processing prompt for "{app_name}": {str(e)}'}), 500
 
     # Root route - landing page
     @app.route('/')

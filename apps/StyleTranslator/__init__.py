@@ -1,7 +1,4 @@
 """
 StyleTranslator package initialization.
+This module is accessed via the Universal Prompting Engine (/api/prompt).
 """
-
-from apps.StyleTranslator.main import bp
-
-__all__ = ['bp']

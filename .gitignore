@@ -54,3 +54,10 @@ db.sqlite3
 
 # Test file
 test.py
+
+# Project specific output and temp files
+output/
+temp_*.json
+cookie.txt
+flask_app.log
+data/

@@ -1,12 +1,11 @@
 """
 Calories main module.
 Contains the main application logic for the Universal Prompting Engine.
+This module is called programmatically via the /api/prompt endpoint.
 """
 
-from flask import Blueprint, request, jsonify
 from apps.core.prompt_service import PromptService
 
-bp = Blueprint('calories', __name__, url_prefix='/calories')
 prompt_service = PromptService()
 
 def handle_prompt(data):

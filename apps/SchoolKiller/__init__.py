@@ -1,7 +1,4 @@
 """
 SchoolKiller package initialization.
-"""
-
-from apps.SchoolKiller.main import bp
-
-__all__ = ['bp'] 
+This module is accessed via the Universal Prompting Engine (/api/prompt).
+""" 
