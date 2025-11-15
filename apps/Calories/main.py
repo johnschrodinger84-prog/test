@@ -36,7 +36,7 @@ def handle_prompt(data):
     )
 
     from apps.core.gemini_service import GeminiService # Import GeminiService
-    gemini_service = GeminiService(model_name='gemini-1.5-flash-latest') # Instantiate GeminiService
+    gemini_service = GeminiService(model_name='gemini-flash-latest') # Instantiate GeminiService
     response = gemini_service.generate_response([None, prompt]) # Generate response
 
     return {"response": response}
